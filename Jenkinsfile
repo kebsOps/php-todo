@@ -66,80 +66,30 @@ pipeline {
      }
    }
 
-  stage ('Upload Artifact to Artifactory') {
-          steps {
-            script { 
-                 def server = Artifactory.server 'artifactory-server'                 
-                 def uploadSpec = """{
-                    "files": [
-                      {
-                       "pattern": "php-todo.zip",
-                       "target": "php-todo/php-todo",
-                       "props": "type=zip;status=ready"
-
-                       }
-                    ]
-                 }""" 
-
-                 server.upload spec: uploadSpec
-               }
-            }
-    }
-  } 
-}
-
-/*
-
-    stage('SonarQube Quality Gate') {
-      when { branch pattern: "^develop*|^hotfix*|^release*|^main*", comparator: "REGEXP"}
-        environment {
-            scannerHome = tool 'SonarQubeScanner'
-        }
+stage ('Upload Artifact to Artifactory') {
         steps {
-            withSonarQubeEnv('sonarqube') {
-                sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+          script { 
+              def server = Artifactory.server 'artifactory-server'                 
+              def uploadSpec = """{
+                  "files": [
+                    {
+                    "pattern": "php-todo.zip",
+                    "target": "php-todo/php-todo",
+                    "props": "type=zip;status=ready"
+
+                    }
+                  ]
+              }""" 
+
+              server.upload spec: uploadSpec
             }
-            timeout(time: 1, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-    }
+          }
+      }
   
-
-stage ('Deploy Artifact') {
+  stage ('Deploy to Dev Environment') {
     steps {
-            sh 'zip -qr ${WORKSPACE}/php-todo.zip ${WORKSPACE}/*'
-            script { 
-                 def server = Artifactory.server 'artifactory-server'
-                 def uploadSpec = """{
-                    "files": [{
-                       "pattern": "php-todo.zip",
-                       "target": "php-todo"
-                    }]
-                 }"""
-
-                 server.upload(uploadSpec) 
-               }
-            // sh 'jfrog rt upload ${WORKSPACE}/php-todo.zip http://35.157.31.6:8082/artifactory/php-todo/todo-${BUILD_NUMBER}.zip'
-    }
-  
-}
-
-
-stage ('Deploy to Dev Environment') {
-    steps {
-    build job: 'ansible-project/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
+    build job: 'ansible-project/dev', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
     }
   }
-
-
 }
-
-    // post {
-    //         always {
-    //             echo 'Clean up'
-    //             //  xunit thresholds: [failed(failureNewThreshold: '0', failureThreshold: '0', unstableNewThreshold: '0', unstableThreshold: '0'), skipped(failureNewThreshold: '0', failureThreshold: '0', unstableNewThreshold: '0', unstableThreshold: '0')], tools: [PHPUnit(deleteOutputFiles: true, failIfNotNew: true, pattern: 'build/logs/junit.xml', skipNoTestFiles: false, stopProcessingIfError: true)]
-    //         }
-    // }
-
-} */
+}
