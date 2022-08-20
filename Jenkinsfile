@@ -65,9 +65,7 @@ pipeline {
             sh 'zip -qr php-todo.zip ${WORKSPACE}/*'
      }
    }
-  }
-}
-/**
+
   stage ('Upload Artifact to Artifactory') {
           steps {
             script { 
@@ -86,10 +84,8 @@ pipeline {
                  server.upload spec: uploadSpec
                }
             }
-
-        }
-      
-  }
+    }
+  } 
 }
 
 /*
