@@ -92,12 +92,16 @@ stage ('Upload Artifact to Artifactory') {
     }
   }
   stage('SonarQube Quality Gate') {
+    when { branch pattern: "^develop*|^hotfix*|^release*|^main*", comparator: "REGEXP"}
       environment {
           scannerHome = tool 'sonarscanner'
       }
       steps {
           withSonarQubeEnv('sonarqube') {
-              sh "${scannerHome}/bin/sonar-scanner"
+              sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+            }
+            timeout(time: 5, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
           }
 
       }
