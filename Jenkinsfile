@@ -69,7 +69,7 @@ pipeline {
       }
       steps {
           withSonarQubeEnv('sonarqube') {
-              sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+              sh "${scannerHome}/bin/sonar-scanner"
             }
              
                 timeout(time: 1, unit: 'MINUTES') { 
