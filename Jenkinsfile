@@ -14,7 +14,8 @@ pipeline {
   
     stage('Checkout SCM') {
       steps {
-            git branch: 'feature/ci-pipeline', url: 'https://github.com/kebsOps/php-todo.git'
+          /*  git branch: 'feature/ci-pipeline', url: 'https://github.com/kebsOps/php-todo.git' */
+          git branch: 'main', url: 'https://github.com/kebsOps/php-todo.git' 
       }
     }
 
@@ -63,8 +64,8 @@ pipeline {
   stage('SonarQube Quality Gate') {
     when { branch pattern: "^develop*|^hotfix*|^release*|^main*", comparator: "REGEXP"}
       environment {
-        /*  scannerHome = tool 'sonarscanner' */
-           scannerHome = tool 'SonarQubeScanner'
+          scannerHome = tool 'sonarscanner'
+          
       }
       steps {
           withSonarQubeEnv('sonarqube') {
