@@ -37,7 +37,7 @@ pipeline {
     }
     stage('Code Analysis') {
       steps {
-          sh 'sudo phploc app/ --log-csv build/logs/phploc.csv'
+          sh 'phploc app/ --log-csv build/logs/phploc.Csv'
 
     }
   }
@@ -71,7 +71,7 @@ pipeline {
           withSonarQubeEnv('sonarqube') {
               sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
             }
-            timeout(time: 5, unit: 'MINUTES') {
+            timeout(time: 1, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
           }
 
