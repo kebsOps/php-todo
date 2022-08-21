@@ -14,8 +14,8 @@ pipeline {
   
     stage('Checkout SCM') {
       steps {
-          /*  git branch: 'feature/ci-pipeline', url: 'https://github.com/kebsOps/php-todo.git' */
-          git branch: 'main', url: 'https://github.com/kebsOps/php-todo.git' 
+            git branch: 'feature/ci-pipeline', url: 'https://github.com/kebsOps/php-todo.git' 
+         
       }
     }
 
@@ -37,7 +37,7 @@ pipeline {
     }
     stage('Code Analysis') {
       steps {
-          sh 'phploc app/ --log-csv build/logs/phploc.csv'
+          sh 'sudo phploc app/ --log-csv build/logs/phploc.csv'
 
     }
   }
