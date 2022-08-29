@@ -14,7 +14,7 @@ pipeline {
   
     stage('Checkout SCM') {
       steps {
-            git branch: 'main', url: 'https://github.com/kebsOps/php-todo.git' 
+            git branch: 'Feature', url: 'https://github.com/kebsOps/php-todo.git' 
          
       }
     }
