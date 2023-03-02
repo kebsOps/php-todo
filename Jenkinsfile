@@ -2,7 +2,7 @@ pipeline {
 
     agent any
     environment {
-    DOCKER_REGISTRY = "hub.docker.com/repository/docker/kebsdev/php-todo-jenkins" // e.g. "docker.io"
+    DOCKER_REGISTRY = "docker.io" // e.g. "docker.io"
     DOCKER_IMAGE_NAME = "php-todo" // e.g. "my-app"
     DOCKER_IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.1" // e.g. "feature-main-0.0.1"
   }
@@ -21,6 +21,7 @@ pipeline {
          stage('Checkout SCM') {
             steps {
                 git branch: 'main', url: 'https://github.com/kebsOps/php-todo.git'
+                    credentialsID: '1ec4f5ca-4594-4117-b75f-52eee5798ec4'
             }
         }
         
