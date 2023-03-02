@@ -20,8 +20,7 @@ pipeline {
 
          stage('Checkout SCM') {
             steps {
-                git branch: 'main', url: 'https://github.com/kebsOps/php-todo.git'
-                    credentialsID: '1ec4f5ca-4594-4117-b75f-52eee5798ec4'
+                git branch: 'main',  credentialsId: '1ec4f5ca-4594-4117-b75f-52eee5798ec4' url: 'https://github.com/kebsOps/php-todo.git'
             }
         }
         
