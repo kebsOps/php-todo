@@ -20,10 +20,10 @@ pipeline {
 
          stage('Checkout SCM') {
             steps {
-                git branch: 'main',  credentialsId: '1ec4f5ca-4594-4117-b75f-52eee5798ec4' url: 'https://github.com/kebsOps/php-todo.git'
+                git branch: 'main',  credentialsId: '1ec4f5ca-4594-4117-b75f-52eee5798ec4', url: 'https://github.com/kebsOps/php-todo.git'
             }
         }
-        
+    
 
        stage("Build Docker Image") {
         steps {
