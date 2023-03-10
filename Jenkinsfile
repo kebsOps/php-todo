@@ -2,8 +2,10 @@ pipeline {
 
     agent any
     environment {
-    DOCKER_REGISTRY = "docker.io" // e.g. "docker.io"
+    DOCKER_REGISTRY = "hub.docker.com/" // e.g. "docker.io"
     DOCKER_IMAGE_NAME = "php-todo" // e.g. "my-app"
+    DOCKER_USERNAME = credentials('kebsdev')
+    DOCKER_PASSWORD = credentials('dockerhub')
     DOCKER_IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.1" // e.g. "feature-main-0.0.1"
   }
 
@@ -25,23 +27,29 @@ pipeline {
         }
     
 
-       stage("Build Docker Image") {
-        steps {
-         script {
-          docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "-f Dockerfile .")
+          stage('Build Docker image') {
+            steps {
+                script {
+                    sh """
+                        docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_NAME}:${DOCKER_IMAGE_TAG} .
+                    """
+                }
+            }
         }
-      }
-    }
 
-      stage("Push Docker Image") {
-       steps {
-        script {
-          docker.withRegistry("${DOCKER_REGISTRY}", "docker-registry-credentials-id") {
-            docker.image("${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
-          }
+      stage('Push Docker image') {
+            steps {
+                script {
+                    withDockerRegistry([credentialsId: 'docker-registry-credentials', url: "${DOCKER_REGISTRY}"]) {
+                        sh """
+                            docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
+                            docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_NAME}:${DOCKER_IMAGE_TAG}
+                        """
+                    }
+                }
+            }
         }
-      }
-
     }
 }
-}
+
+
