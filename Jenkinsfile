@@ -2,7 +2,7 @@ pipeline {
 
     agent any
     environment {
-    DOCKER_REGISTRY = "https://index.docker.io/v1/" // e.g. "docker.io"
+    DOCKER_REGISTRY = "https://hub.docker.com" // e.g. "docker.io"
     DOCKER_REPO_NAME = "php-todo"
     DOCKER_USERNAME = credentials('kebsdev')
     DOCKER_PASSWORD = credentials('dockerhub')
