@@ -5,7 +5,7 @@ pipeline {
     DOCKER_REGISTRY = "https://registry.hub.docker.com" // e.g. "docker.io"
     DOCKER_REPO_NAME = "kebsdev/php-todo"
     DOCKER_USERNAME = credentials('kebsdev')
-    DOCKER_PASSWORD = credentials('dockerhub')
+    DOCKER_PASSWORD = credentials('Jenkins')
     DOCKER_IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.1" // e.g. "feature-main-0.0.1"
   }
 
