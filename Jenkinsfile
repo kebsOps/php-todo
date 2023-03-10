@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                          sh "docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
+                        docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .
                     """
                 }
             }
