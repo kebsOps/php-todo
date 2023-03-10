@@ -2,7 +2,7 @@ pipeline {
 
     agent any
     environment {
-    DOCKER_REGISTRY = "hub.docker.com" // e.g. "docker.io"
+    DOCKER_REGISTRY = "docker.io" // e.g. "docker.io"
     DOCKER_REPO_NAME = "php-todo"
     DOCKER_USERNAME = credentials('kebsdev')
     DOCKER_PASSWORD = credentials('dockerhub')
@@ -22,7 +22,7 @@ pipeline {
 
          stage('Checkout SCM') {
             steps {
-                git branch: 'main',   url: 'https://github.com/kebsOps/php-todo.git'
+                git branch: 'main',  credentialsId: '1ec4f5ca-4594-4117-b75f-52eee5798ec4', url: 'https://github.com/kebsOps/php-todo.git'
             }
         }
     
