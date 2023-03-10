@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_NAME}:${DOCKER_IMAGE_TAG} .
+                          sh "docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
                     """
                 }
             }
@@ -42,8 +42,8 @@ pipeline {
                 script {
                     withDockerRegistry([credentialsId: 'docker-registry-credentials', url: "${DOCKER_REGISTRY}"]) {
                         sh """
-                            docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
-                            docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_NAME}:${DOCKER_IMAGE_TAG}
+                          docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}
+                          docker push kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER}
                         """
                     }
                 }
