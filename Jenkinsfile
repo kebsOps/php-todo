@@ -30,7 +30,7 @@ pipeline {
           stage('Build Docker image') {
             steps {
                    // sh  'docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .'
-                  sh  'docker build("${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}") '
+                  sh  'docker build -t ("${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}") .'
                 }
               }
 
