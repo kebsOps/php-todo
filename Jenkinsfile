@@ -4,6 +4,9 @@ pipeline {
     
     environment {
             DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-kebsdev')
+            DOCKER_REGISTRY = "docker.io/"
+            IMAGE_NAME = "kebsOps/php-todo"
+            IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.1"
     }
 
     stages {
@@ -26,9 +29,11 @@ pipeline {
 
           stage('Build Docker image') {
             steps {
-                    sh  'docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .'
-                  
+                   // sh  'docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .'
+                  script {
+                    docker.build("${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}")
                 }
+              }
             }
 
       
@@ -36,11 +41,8 @@ pipeline {
       stage('Push Docker image') {
             steps {
                 script {
-                    withDockerRegistry([credentialsId: 'docker-registry-credentials', url: "${DOCKER_REGISTRY}"]) {
-                        sh """
-                          docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}
-                          docker push kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER}
-                        """
+                    docker.withRegistry("${DOCKER_REGISTRY}", "docker-credentials-id") {
+                        dockerImage.push("${IMAGE_TAG}")
                     }
                 }
             }
