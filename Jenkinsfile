@@ -33,7 +33,6 @@ pipeline {
                   sh  'docker build("${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}") '
                 }
               }
-            }
 
       
 
