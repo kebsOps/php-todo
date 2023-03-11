@@ -2,7 +2,9 @@ pipeline {
 
     agent any
     
-  
+    environment {
+            DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-kebsdev')
+    }
 
     stages {
 
@@ -24,18 +26,18 @@ pipeline {
 
           stage('Build Docker image') {
             steps {
-                script {
-                    sh """
-                        docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .
-                    """
+                    sh  'docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .'
+                  
                 }
             }
         }
 
+      
+
       stage('Push Docker image') {
             steps {
                 script {
-                     withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                    withDockerRegistry([credentialsId: 'docker-registry-credentials', url: "${DOCKER_REGISTRY}"]) {
                         sh """
                           docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}
                           docker push kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER}
