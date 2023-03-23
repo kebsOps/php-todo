@@ -3,7 +3,7 @@ pipeline {
     agent any
       
     environment {
-            DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-kebsdev')
+            DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-kebsdev', 'dockerhublogin')
             DOCKER_REGISTRY = "hub.docker.com"
             IMAGE_NAME = "kebsdev/php-todo"
             IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.2"
@@ -42,9 +42,9 @@ pipeline {
       stage('Push Docker image') {
             steps {
                 script {
-                    docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev") {
-                   // dockerImage.push("${IMAGE_TAG}")
-                    dockerImage.push()
+                    docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev", "dockerhublogin") {
+                    dockerImage.push("${IMAGE_TAG}")
+                   // dockerImage.push()
                     }
                 }
             }
