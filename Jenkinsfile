@@ -41,12 +41,14 @@ pipeline {
 
       stage('Push Docker image') {
             steps {
-                script {
+               // script {
                     docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev") {
                  //   dockerImage.push("${IMAGE_TAG}")
-                   dockerImage.push("${IMAGE_NAME}:${IMAGE_TAG}")
-                    }
-                }
+                 
+              //      }
+              //  }
+                    sh 'docker push "${IMAGE_NAME}:${IMAGE_TAG}" .'
+              
             }
         }
     }
