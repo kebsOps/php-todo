@@ -6,7 +6,7 @@ pipeline {
             DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-kebsdev')
             DOCKER_REGISTRY = "hub.docker.com"
             IMAGE_NAME = "kebsdev/php-todo"
-            IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0."
+            IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.4"
 
             
     }
@@ -47,9 +47,10 @@ pipeline {
                  
               //      }
               //  }
-                    sh " docker login ${dockerhub-cred-kebsdev}"
-                    sh 'docker push "${IMAGE_NAME}:${IMAGE_TAG}" '
-              
+                    withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
+                        sh 'docker login -u kebsdev -p ${dockerpat}'
+                        sh 'docker push "${IMAGE_NAME}:${IMAGE_TAG}"'
+            }             
           }
         }
     }
