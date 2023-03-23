@@ -40,7 +40,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry("${DOCKER_REGISTRY}", "docker-credentials-id") {
-                        dockerImage.push("${IMAGE_NAME}:${IMAGE_TAG}")
+                 //       dockerImage.push("${IMAGE_NAME}:${IMAGE_TAG}")
+                    dockerImage.push()
                     }
                 }
             }
