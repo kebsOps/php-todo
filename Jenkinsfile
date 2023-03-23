@@ -47,6 +47,7 @@ pipeline {
                  
               //      }
               //  }
+                    sh " docker login ${dockerhub-cred-kebsdev}"
                     sh 'docker push "${IMAGE_NAME}:${IMAGE_TAG}" '
               
           }
