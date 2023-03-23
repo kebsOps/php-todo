@@ -4,7 +4,7 @@ pipeline {
       
     environment {
             DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-kebsdev')
-            DOCKER_REGISTRY = "https://hub.docker.com/"
+            DOCKER_REGISTRY = "https://hub.docker.com"
             IMAGE_NAME = "kebsdev/php-todo"
             IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.1"
     }
