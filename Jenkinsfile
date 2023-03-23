@@ -40,8 +40,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev") {
-                 //       dockerImage.push("${IMAGE_NAME}:${IMAGE_TAG}")
-                    dockerImage.push()
+                    dockerImage.push("${IMAGE_TAG}")
+                 //   dockerImage.push()
                     }
                 }
             }
