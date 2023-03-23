@@ -44,8 +44,8 @@ pipeline {
                 script {
                   //  docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev") {
                         withDockerRegistry(credentialsId: 'dockerhub-cred-kebsdev') {
-                    dockerImage.push("${IMAGE_TAG}")
-                   // dockerImage.push()
+                   // dockerImage.push("${IMAGE_TAG}")
+                    dockerImage.push()
                     }
                 }
             }
