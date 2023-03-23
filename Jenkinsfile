@@ -7,6 +7,8 @@ pipeline {
             DOCKER_REGISTRY = "hub.docker.com"
             IMAGE_NAME = "kebsdev/php-todo"
             IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.2"
+
+            
     }
 
     stages {
@@ -30,7 +32,8 @@ pipeline {
           stage('Build Docker image') {
             steps {
                    // sh  'docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .'
-                  sh  'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'
+             //     sh  'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'
+                 sh  'docker build -t "${IMAGE_NAME}:${env.BRANCH_NAME}-0.0.${env.BUILD_NUMBER}" .'
                 }
               }
 
@@ -40,8 +43,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev") {
-                    dockerImage.push("${IMAGE_TAG}")
-                 //   dockerImage.push()
+                   // dockerImage.push("${IMAGE_TAG}")
+                    dockerImage.push()
                     }
                 }
             }
