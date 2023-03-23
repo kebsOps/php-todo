@@ -4,7 +4,7 @@ pipeline {
       
     environment {
             DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-kebsdev')
-           // DOCKER_REGISTRY = "hub.docker.com"
+            DOCKER_REGISTRY = "hub.docker.com"
             IMAGE_NAME = "kebsdev/php-todo"
             IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.2"
     }
@@ -30,7 +30,7 @@ pipeline {
           stage('Build Docker image') {
             steps {
                    // sh  'docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .'
-                  sh  'docker build -t "${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" .'
+                  sh  'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'
                 }
               }
 
