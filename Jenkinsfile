@@ -42,7 +42,7 @@ pipeline {
       stage('Push Docker image') {
             steps {
                 script {
-                    docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev", "dockerhublogin") {
+                    docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev") {
                     dockerImage.push("${IMAGE_TAG}")
                    // dockerImage.push()
                     }
