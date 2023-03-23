@@ -6,7 +6,7 @@ pipeline {
             DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-kebsdev')
             DOCKER_REGISTRY = "hub.docker.com"
             IMAGE_NAME = "kebsdev/php-todo"
-            IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.4"
+            IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.${env.BUILD_NUMBER}"
 
             
     }
@@ -31,7 +31,7 @@ pipeline {
 
           stage('Build Docker image') {
             steps {
-                   // sh  'docker build -t kebsOps/php-todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} .'
+
                   sh  'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'
               
                 }
@@ -41,12 +41,7 @@ pipeline {
 
       stage('Push Docker image') {
             steps {
-               // script {
-             //       docker.withRegistry("${DOCKER_REGISTRY}", "dockerhub-cred-kebsdev") {
-                 //   dockerImage.push("${IMAGE_TAG}")
-                 
-              //      }
-              //  }
+           
                     withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
                         sh 'docker login -u kebsdev -p ${dockerpat}'
                         sh 'docker push "${IMAGE_NAME}:${IMAGE_TAG}"'
