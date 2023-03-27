@@ -37,7 +37,7 @@ pipeline {
                 }
               }
 
-        stage("Start APP") {
+        stage("Start A") {
           script {
                     sh "sleep 60"
                     sh "curl -I 105.113.6.66:8000"
