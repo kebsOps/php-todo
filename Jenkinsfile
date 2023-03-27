@@ -46,7 +46,7 @@ pipeline {
         stage("Test App") {
          steps {
              script {
-                    def response = sh(returnStdout: true, script: "curl -s -o /dev/null -w '%{http_code}' http://localhost:8000")
+                    def response = sh(returnStdout: true, script: "curl -s -o /dev/null -w '%{http_code}' localhost:8000")
                     if (response == '200') {
                         echo 'Endpoint test passed!'
                     } else {
