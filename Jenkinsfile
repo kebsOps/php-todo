@@ -51,6 +51,7 @@ pipeline {
                         if (response.status == 200) {
                            echo 'Test successful'
                             }
+                            break
                         }
                     }
                 }
@@ -59,7 +60,7 @@ pipeline {
 
         stage('Push Docker image') {
             steps {
-           
+                when { expression { response.status == 200 } }
                     withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
                         sh 'docker login -u kebsdev -p ${dockerpat}'
                         sh 'docker push "${IMAGE_NAME}:${IMAGE_TAG}"'
