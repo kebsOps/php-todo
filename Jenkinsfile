@@ -38,25 +38,11 @@ pipeline {
               }
 
         stage("Start APP") {
-            steps {
-                sh 'docker compose -f tooling.yaml  up -d'
-            }
-        }    
-
-        stage("Test Endpoint") {
-            steps {
-                script {
-                     while (true) {
-                        def response = httpRequest 'http://localhost:8000'
-                        if (response.status == 200) {
-                           echo 'Test successful'
-                            }
-                            break
-                        }
-                    }
+          script {
+                    sh "sleep 60"
+                    sh "curl -I 105.113.6.66:8000"
                 }
-            }
-        
+        }
 
         stage('Push Docker image') {
             steps {
