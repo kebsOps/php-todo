@@ -37,6 +37,12 @@ pipeline {
                 }
               }
 
+           stage("Start the app") {
+          steps {
+              sh 'docker compose -f tooling.yaml  up -d'
+          }
+      }
+
         stage("Test App") {
          steps {
              script {
