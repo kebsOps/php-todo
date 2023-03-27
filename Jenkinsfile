@@ -49,7 +49,7 @@ pipeline {
                      while (true) {
                         def response = httpRequest 'http://localhost:8000'
                         if (response.status == 200) {
-                           echo(message: 'Test successful')
+                           echo 'Test successful'
                             }
                         }
                     }
