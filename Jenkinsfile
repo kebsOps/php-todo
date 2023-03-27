@@ -37,7 +37,7 @@ pipeline {
                 }
               }
 
-        stage("Start A") {
+        stage("Start App") {
           script {
                     sh "sleep 60"
                     sh "curl -I 105.113.6.66:8000"
@@ -46,12 +46,21 @@ pipeline {
 
         stage('Push Docker image') {
             steps {
-                when { expression { response.status == 200 } }
                     withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
                         sh 'docker login -u kebsdev -p ${dockerpat}'
                         sh 'docker push "${IMAGE_NAME}:${IMAGE_TAG}"'
             }             
           }
+        }
+
+        stage ('Clean Up') {
+            steps {
+                script {
+                    sh 'docker stop "${IMAGE_NAME}:${IMAGE_TAG}"'
+                    sh 'docker rm "${IMAGE_NAME}:${IMAGE_TAG}"'
+                    sh 'docker rmi "${IMAGE_NAME}:${IMAGE_TAG}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}'
+                }
+            }
         }
     }
 }
