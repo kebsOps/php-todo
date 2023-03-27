@@ -38,12 +38,14 @@ pipeline {
               }
 
         stage("Start App") {
-          script {
+         steps {
+            script {
                     sh "sleep 60"
                     sh "curl -I 105.113.6.66:8000"
                 }
+            }
         }
-
+        
         stage('Push Docker image') {
             steps {
                     withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
