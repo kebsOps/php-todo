@@ -37,11 +37,15 @@ pipeline {
                 }
               }
 
-        stage("Start App") {
+        stage("Test App") {
          steps {
-            script {
-                    sh "sleep 10"
-                    sh "curl -I 105.113.6.66:8000"
+             script {
+                    def response = sh(returnStdout: true, script: "curl -s -o /dev/null -w '%{http_code}' http://localhost:8000")
+                    if (response == '200') {
+                        echo 'Endpoint test passed!'
+                    } else {
+                        error 'Endpoint test failed with response code: ' + response
+                    }
                 }
             }
         }
