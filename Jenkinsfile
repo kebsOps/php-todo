@@ -37,9 +37,28 @@ pipeline {
                 }
               }
 
-      
+        stage("Start APP") {
+            steps {
+                sh "docker-compose up -d"
+            }
+        }    
 
-      stage('Push Docker image') {
+        stage("Test Endpoint") {
+            steps {
+                script {
+                     while (true) {
+                        def response = httpRequest 'http://localhost:8000'
+                        if (response.status == 200) {
+                           echo(message: 'Test successful')
+                            }
+                            break 
+                        }
+                    }
+                }
+            }
+        
+
+        stage('Push Docker image') {
             steps {
            
                     withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
