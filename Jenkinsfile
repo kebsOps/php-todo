@@ -51,7 +51,6 @@ pipeline {
                         if (response.status == 200) {
                            echo(message: 'Test successful')
                             }
-                            break 
                         }
                     }
                 }
