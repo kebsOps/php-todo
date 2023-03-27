@@ -39,7 +39,7 @@ pipeline {
 
         stage("Start APP") {
             steps {
-                sh 'docker-compose -f tooling.yaml  up -d'
+                sh 'docker compose -f tooling.yaml  up -d'
             }
         }    
 
