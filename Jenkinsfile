@@ -39,7 +39,7 @@ pipeline {
 
            stage("Start the app") {
           steps {
-               sh 'docker run --network php_todo_app_network -p -d 8000:7001 -it "${IMAGE_NAME}:${IMAGE_TAG}"'
+               sh 'docker run --network php_todo_app_network -p 8000:7001 -it "${IMAGE_NAME}:${IMAGE_TAG}"'
           }
       }
 
