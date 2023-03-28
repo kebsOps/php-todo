@@ -3,14 +3,14 @@ services:
   todo_frontend:
     build: .
     ports:
-      - "8000:7001"
+      - "8000:8000"
     volumes:
       - todo_frontend:/php-todo
     links:
       - db
 
   db:
-    image: mysql:5.7
+    image: mysql:latest
     restart: always
     environment:
       MYSQL_DATABASE: homestead
