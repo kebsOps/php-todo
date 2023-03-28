@@ -3,7 +3,7 @@ services:
   todo_frontend:
     build: .
     ports:
-      - "8000:7001"
+      - "9000:7001"
     volumes:
       - todo_frontend:/php-todo
     links:
