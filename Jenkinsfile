@@ -52,7 +52,7 @@ pipeline {
                     } else {
                         error 'Endpoint test failed with response code: ' + response
                     }
-                    break
+                
                 }
             }
         }
