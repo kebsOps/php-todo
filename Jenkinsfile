@@ -39,7 +39,7 @@ pipeline {
 
            stage("Start the app") {
           steps {
-               sh 'docker run --network php_todo_app_network -p 8000:7001  "${IMAGE_NAME}:${IMAGE_TAG}"'
+               sh 'docker-compose -f tooling.yaml  up -d'
           }
       }
 
@@ -47,16 +47,18 @@ pipeline {
          steps {
              script {
                     def response = httpRequest 'http://localhost:8000'
-                    if (response.status == '200') {
+                    if (response.status == 200) {
                         echo 'Endpoint test passed!'
                     } else {
                         error 'Endpoint test failed with response code: ' + response
                     }
+                    break
                 }
             }
         }
 
         stage('Push Docker image') {
+             when { expression { response.status == 200 } }
             steps {
                     withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
                         sh 'docker login -u kebsdev -p ${dockerpat}'
