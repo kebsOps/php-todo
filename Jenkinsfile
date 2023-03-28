@@ -48,7 +48,8 @@ pipeline {
          steps {
              script {
               while (true) {
-                 def response = httpRequest 'http://192.168.0.119:9000'
+                def response = httpRequest curl -I 'http://192.168.0.119:9000'
+              //   'http://192.168.0.119:9000'
                     if (response.status == '200') {
                         echo 'Endpoint test passed!'
                     } else {
