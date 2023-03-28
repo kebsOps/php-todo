@@ -47,17 +47,18 @@ pipeline {
         stage("Test App") {
          steps {
              script {
+              while (true) {
                  def response = httpRequest 'http://localhost:8000'
                     if (response.status == '200') {
                         echo 'Endpoint test passed!'
                     } else {
                         error 'Endpoint test failed with response code: ' + response
                     }
-                
+                    break
                 }
             }
         }
-
+    
         stage('Push Docker image') {
              when { expression { response.status == 200 } }
             steps {
