@@ -58,7 +58,7 @@ pipeline {
                 }
             }
         }
-    
+    }
         stage('Push Docker image') {
              when { expression { response.status == 200 } }
             steps {
