@@ -47,7 +47,7 @@ pipeline {
         stage("Test App") {
          steps {
              script {
-                 def response = httpRequest 'localhost:8000'
+                 def response = httpRequest 'http://localhost:8000'
                     if (response.status == '200') {
                         echo 'Endpoint test passed!'
                     } else {
