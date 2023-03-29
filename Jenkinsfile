@@ -31,10 +31,7 @@ pipeline {
 
           stage('Build Docker image') {
             steps {
-            sh 'docker run --network php_todo_app_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=admin12345 -d mysql/mysql-server:latest'
-            sh 'docker exec -i mysql-server mysql -u root -p admin12345 < create_php_todo_user.sql'
-            sh  'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'
-              
+                  sh  'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'             
                 }
               }
 
@@ -50,13 +47,12 @@ pipeline {
           steps {
             script{
                 sh 'sleep 10'
-                sh 'curl -I http://localhost:8000 | grep -q "HTTP/1.1 200 OK"'
+                sh 'curl -I http://105.113.6.66 | grep -q "HTTP/1.1 200 OK"'
                 }
             }
         }
         
         stage('Push Docker image') {
-           //  when { expression { response.status == 200 } }
             steps {
                     withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
                         sh 'docker login -u kebsdev -p ${dockerpat}'
@@ -68,7 +64,7 @@ pipeline {
         stage ('Clean Up') {
             steps {
                 script {
-                    sh 'docker rm "${IMAGE_NAME}:${IMAGE_TAG}"'
+                    sh 'docker rm "${IMAGE_NAME}:${IMAGE_TAG}'
                 }
             }
         }
