@@ -67,7 +67,7 @@ pipeline {
         stage ('Clean Up') {
             steps {
                 script {
-                    sh 'docker rm "${IMAGE_NAME}:${IMAGE_TAG}'
+                    sh 'docker rm "${IMAGE_NAME}:${IMAGE_TAG}"'
                 }
             }
         }
