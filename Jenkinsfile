@@ -64,7 +64,7 @@ pipeline {
         stage ('Clean Up') {
             steps {
                 script {
-                    sh 'docker rm "${IMAGE_NAME}:${IMAGE_TAG}'
+                     sh 'docker rmi kebsdev/php-todo:"${env.BRANCH_NAME}-${env.BUILD_NUMBER}"'
                 }
             }
         }
