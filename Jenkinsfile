@@ -64,7 +64,7 @@ pipeline {
         stage ('Clean Up') {
             steps {
                 script {
-                     sh 'docker rmi php-todo:"${IMAGE_TAG}"'
+                     sh 'docker rm php-todo:"${IMAGE_TAG}"'
                 }
             }
         }
