@@ -37,30 +37,29 @@ pipeline {
                 }
               }
 
-           stage("Start the app") {
+             stage("Start the app") {
           steps {
-              sh 'docker-compose -f tooling.yaml  up -d'
-             
-          }
-      }
-
-        stage("Test App") {
-         steps {
-             script {
-              while (true) {
-               def response = httpRequest 'http://localhost:9000'
-                    if (response.status == 200) {
-                        echo 'Endpoint test passed!'
-                    } else {
-                        error 'Endpoint test failed with response code: ' + response
-                    }
-                    break
+                script {
+                    sh " docker run -d -p 8000:8000 "${IMAGE_NAME}:${IMAGE_TAG}""
                 }
             }
         }
+
+         stage("Test App") {
+          steps {
+            sh 'curl -I http://localhost.com | grep -q "HTTP/1.1 200 OK"'
+        }
+            post {
+                success {
+                  echo 'Test passed. Proceeding with image push.'
+        }
+        failure {
+          error 'Test failed. Stopping pipeline.'
+        }
+      }
     }
         stage('Push Docker image') {
-             when { expression { response.status == 200 } }
+           //  when { expression { response.status == 200 } }
             steps {
                     withCredentials([string(credentialsId: 'docker-pat', variable: 'dockerpat')]) {
                         sh 'docker login -u kebsdev -p ${dockerpat}'
