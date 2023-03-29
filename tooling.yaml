@@ -13,6 +13,7 @@ services:
     image: mysql:5.7
     restart: always
     environment:
+      MYSQL_HOST: mysqlserverhost
       MYSQL_DATABASE: homestead
       MYSQL_USER: homestead
       MYSQL_PASSWORD: sePret^i
