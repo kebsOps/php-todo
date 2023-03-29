@@ -31,7 +31,7 @@ pipeline {
 
           stage('Build Docker image') {
             steps {
-            sh 'docker run --network php_todo_app_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=admin12345 -d mysql:latest'
+            sh 'docker run --network php_todo_app_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=admin12345 -d mysql/mysql-server:latest'
             sh 'docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < create_php_todo_user.sql'
             sh  'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'
               
