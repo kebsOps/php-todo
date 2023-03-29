@@ -67,7 +67,7 @@ pipeline {
         stage ('Clean Up') {
             steps {
                 script {
-                    sh 'docker rmi "${IMAGE_NAME}:${IMAGE_TAG}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}'
+                    sh 'docker rmi "${IMAGE_NAME}:${IMAGE_TAG}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"'
                 }
             }
         }
