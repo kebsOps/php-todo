@@ -7,7 +7,6 @@ pipeline {
             DOCKER_REGISTRY = "hub.docker.com"
             IMAGE_NAME = "kebsdev/php-todo"
             IMAGE_TAG = "feature-${env.BRANCH_NAME}-0.0.${env.BUILD_NUMBER}"
-            MYSQL_PW =  "admin12345"
 
             
     }
@@ -32,8 +31,7 @@ pipeline {
 
           stage('Build Docker image') {
             steps {
-            sh 'docker run --network php_todo_app_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD="${MYSQL_PW}"
--d mysql:5.7'
+            sh 'docker run --network php_todo_app_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=admin12345 -d mysql:5.7'
             sh 'docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < create_php_todo_user.sql'
             sh  'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'
               
