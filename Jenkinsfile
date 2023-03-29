@@ -49,7 +49,7 @@ pipeline {
           steps {
             script{
                 sh 'sleep 10'
-                sh 'curl -I http://localhost:8000 | grep -q "HTTP/1.1 200 OK"'
+                sh 'curl -I http://105.113.6.66 | grep -q "HTTP/1.1 200 OK"'
                 }
             }
         }
