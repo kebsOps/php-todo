@@ -47,17 +47,13 @@ pipeline {
 
          stage("Test App") {
           steps {
+            script{
+                sh 'sleep 10'
             sh 'curl -I http://localhost.com | grep -q "HTTP/1.1 200 OK"'
+                }
+            }
         }
-            post {
-                success {
-                  echo 'Test passed. Proceeding with image push.'
-        }
-        failure {
-          error 'Test failed. Stopping pipeline.'
-        }
-      }
-    }
+        
         stage('Push Docker image') {
            //  when { expression { response.status == 200 } }
             steps {
