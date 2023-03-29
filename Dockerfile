@@ -24,8 +24,6 @@ RUN apt-get update && apt-get install -y \
 
 ENV DB_HOST=db  
 
-WORKDIR  /root/php-todo
-
 RUN sed -i -e "s/DB_HOST=127\.0\.0\.1/DB_HOST=${DB_HOST}/" .env.sample && mv .env.sample .env 
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
