@@ -10,7 +10,7 @@ services:
       - db
 
   db:
-    image: mysql/mysql-server:latest
+    image: mysql:8.0.32
     restart: always
     environment:
       MYSQL_DATABASE: homestead
