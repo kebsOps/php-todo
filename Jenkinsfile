@@ -63,12 +63,11 @@ pipeline {
 
         stage ('Clean Up') {
             steps {
-                script {
-                     sh 'docker rm php-todo:"${IMAGE_TAG}"'
+                     sh 'docker system prune -af'
                 }
             }
         }
     }
-}
+
 
 
