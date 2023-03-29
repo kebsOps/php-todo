@@ -22,6 +22,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-source delete
   
 
+ENV MYSQL_DATABASE homestead
+ENV MYSQL_USER homestead
+ENV MYSQL_PASSWORD sePret^i
+ENV MYSQL_ROOT_PASSWORD admin12345
+ADD create_php_todo_user.sql /docker-entrypoint-initdb.d/
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
 
